@@ -1,0 +1,51 @@
+{
+  "n_frames": 1200006,
+  "kT_kJmol": 2.5941123312,
+  "folded_mask": "q>0.65",
+  "unfolded_mask": "q<0.35",
+  "note": "time column is a frame index; frames are 100 ps apart (120 us total)",
+  "q": {
+    "folded_min": 0.9039617299999999,
+    "basin_mean": 0.8865729738212323,
+    "basin_sigma": 0.049977340899420214,
+    "unfolded_min": 0.18463288999999997,
+    "F_unfolded_min_kJmol": 3.356484037220085,
+    "barrier_pos": 0.57345929,
+    "barrier_kJmol": 15.43573210405578,
+    "barrier_kT": 5.950294410310069,
+    "p_unfolded_at_barrier": 0.0
+  },
+  "rmsd": {
+    "folded_min": 0.13021262,
+    "basin_mean": 0.16941696092278274,
+    "basin_sigma": 0.06642875760026333,
+    "unfolded_min": 2.25944378,
+    "F_unfolded_min_kJmol": 8.745030510764806,
+    "barrier_pos": 0.9413483,
+    "barrier_kJmol": 17.902137722730863,
+    "barrier_kT": 6.901064964464968,
+    "p_unfolded_at_barrier": 0.11857707509881422
+  },
+  "rg": {
+    "folded_min": 1.0415581,
+    "basin_mean": 1.0522607260393164,
+    "basin_sigma": 0.01388495989876078,
+    "unfolded_min": 2.40566578,
+    "F_unfolded_min_kJmol": 11.451126074419328,
+    "barrier_pos": 1.27765366,
+    "barrier_kJmol": 18.057691246195052,
+    "barrier_kT": 6.961029030628684,
+    "p_unfolded_at_barrier": 0.24574669187145556
+  },
+  "ree": {
+    "folded_min": 2.709413215,
+    "basin_mean": 2.590113454863405,
+    "basin_sigma": 0.15191848047213194,
+    "unfolded_min": 6.264107364999999,
+    "F_unfolded_min_kJmol": 10.18735857043137,
+    "barrier_pos": 2.912538595,
+    "barrier_kJmol": 15.36955066405664,
+    "barrier_kT": 5.924782238303035,
+    "p_unfolded_at_barrier": 0.9770554493307839
+  }
+}

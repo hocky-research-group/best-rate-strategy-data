@@ -1,0 +1,211 @@
+# What the public release carries out of this repository, and where each file sits there.
+#
+# Columns, tab-separated:  <path in this repository>  <path in the release>  [note]
+# A path ending in / is a directory, shipped whole. A release path of - means the file is
+# not released, and the note says why. Every tracked file under scripts/, analysis/,
+# paper_figures/ and tests/ is listed here or lies under a listed directory;
+# tests/test_release_manifest.py holds that property.
+#
+# The release keeps the data layer (fits, per-run summaries, inputs) that build_release.sh
+# assembles on torch. This file is the authored layer: code, the notebook, the tables and
+# figures of the paper, and the small data held only here.
+#
+# A row whose first field is @link declares a symbolic link of the release:
+#   @link  <link path in the release>  <target, relative to the link's directory>
+# Scripts import paths.py as a sibling, so each script directory links to the one copy.
+#
+# ---- top level -------------------------------------------------------------------------
+release_README.md	README.md
+pyproject.toml	pyproject.toml
+uv.lock	uv.lock
+release_gitignore	.gitignore
+release_LICENSE	LICENSE
+scripts/release_manifest.tsv	scripts/release_manifest.tsv
+scripts/paths.py	scripts/paths.py
+@link	scripts/analysis/paths.py	../paths.py
+@link	scripts/fit/paths.py	../paths.py
+@link	scripts/run/paths.py	../paths.py
+@link	scripts/setup/paths.py	../paths.py
+@link	scripts/analysis/bias_design_recipe.py	../setup/bias_design_recipe.py
+scripts/build_release.sh	scripts/build_release.sh
+scripts/verify_release.sh	scripts/verify_release.sh
+scripts/rebuild_release.sbatch	scripts/rebuild_release.sbatch
+scripts/study_run_summary.py	scripts/study_run_summary.py
+scripts/fetch_large_files.sh	scripts/fetch_large_files.sh
+scripts/assemble_public_repository.sh	-	builds the public repository from the release; meaningless inside it
+scripts/compare_release_tables.py	-	compares a release with this repository; meaningless inside it
+scripts/sync_release_code.sh	-	pushes this repository's files to the release; meaningless inside it
+scripts/stash_loose_run_trees.sbatch	-	moves run trees off the cluster's project filesystem; not part of the analysis
+scripts/restore_stashed_run_trees.sbatch	-	brings stashed run trees back to the cluster's project filesystem; not part of the analysis
+scripts/stash_stray_run_data.sbatch	-	moves run data of campaigns outside the paper off the cluster's project filesystem; not part of the analysis
+scripts/make_manuscript_diff.sh	-	manuscript tooling
+#
+# ---- analysis: fits and summaries -> tables -> figure data -> figures ------------------
+scripts/aggregate_results.py	scripts/analysis/aggregate_results.py
+scripts/aggregate_subsampling.py	scripts/analysis/aggregate_subsampling.py
+scripts/analyze_fametad.py	scripts/analysis/analyze_fametad.py
+scripts/analyze_temperature_rates.py	scripts/analysis/analyze_temperature_rates.py
+scripts/analyze_untempered_growth_law.py	scripts/analysis/analyze_untempered_growth_law.py
+scripts/censoring_robustness.py	scripts/analysis/censoring_robustness.py
+scripts/check_flooding_refits.py	scripts/analysis/check_flooding_refits.py
+scripts/crop_png_whitespace.py	scripts/analysis/crop_png_whitespace.py
+scripts/cv_autocorrelation.py	scripts/analysis/cv_autocorrelation.py
+scripts/export_paper_figure_data.py	scripts/analysis/export_paper_figure_data.py
+scripts/fes_temperature_scan.py	scripts/analysis/fes_temperature_scan.py
+scripts/fes_temperature_scan_ree.py	scripts/analysis/fes_temperature_scan_ree.py
+scripts/flooding_io.py	scripts/analysis/flooding_io.py
+scripts/flooding_set_selection.py	scripts/analysis/flooding_set_selection.py
+scripts/heuristics_growth_law.py	scripts/analysis/heuristics_growth_law.py
+scripts/ks_detectability.py	scripts/analysis/ks_detectability.py
+scripts/make_si_tables.py	scripts/analysis/make_si_tables.py
+scripts/pilot_analysis.py	scripts/analysis/pilot_analysis.py
+scripts/plot_accuracy_vs_cost.py	scripts/analysis/plot_accuracy_vs_cost.py
+scripts/plot_fes_convergence.py	scripts/analysis/plot_fes_convergence.py
+scripts/plot_highbarrier_ladder.py	scripts/analysis/plot_highbarrier_ladder.py
+scripts/plot_minimum_data.py	scripts/analysis/plot_minimum_data.py
+scripts/plot_pmf_bias_overlays.py	scripts/analysis/plot_pmf_bias_overlays.py
+scripts/plot_pmf_temperature.py	scripts/analysis/plot_pmf_temperature.py
+scripts/plot_regime_diagnostics.py	scripts/analysis/plot_regime_diagnostics.py
+scripts/pmf_from_unbiased_colvar.py	scripts/analysis/pmf_from_unbiased_colvar.py
+scripts/prospective_outcome.py	scripts/analysis/prospective_outcome.py
+scripts/q_ladder_snapshots.py	scripts/analysis/q_ladder_snapshots.py
+scripts/rebuild_tables_figures_draft.sh	scripts/analysis/rebuild_tables_figures_draft.sh
+scripts/reference_rate.py	scripts/analysis/reference_rate.py
+scripts/render_go_snapshots.tcl	scripts/analysis/render_go_snapshots.tcl
+scripts/tau_from_fes.py	scripts/analysis/tau_from_fes.py
+scripts/tradeoff_analysis.py	scripts/analysis/tradeoff_analysis.py
+scripts/unbiased_pmf_convergence.py	scripts/analysis/unbiased_pmf_convergence.py
+scripts/analyze_neff_estimator_choice.py	-	exploratory analysis, not in the paper
+scripts/plot_acceleration_distributions.py	-	exploratory analysis, not in the paper
+scripts/robust_fit_rules.py	-	exploratory analysis, not in the paper
+scripts/plot_opes_explore.py	-	OPES-explore campaign, archived and not in the paper
+#
+# ---- fits: per-run output -> rate estimates --------------------------------------------
+scripts/bias_profiles.py	scripts/fit/bias_profiles.py
+scripts/bias_profiles.sbatch	scripts/fit/bias_profiles.sbatch
+scripts/eatr_grid_subsample.sbatch	scripts/fit/eatr_grid_subsample.sbatch
+scripts/eatr_pilot_subsample.sbatch	scripts/fit/eatr_pilot_subsample.sbatch
+scripts/finalize_results.sh	scripts/fit/finalize_results.sh
+scripts/fit_fametad.sbatch	scripts/fit/fit_fametad.sbatch
+scripts/fit_opes_temperature.sbatch	scripts/fit/fit_opes_temperature.sbatch
+scripts/fit_untempered.sbatch	scripts/fit/fit_untempered.sbatch
+scripts/fit_wtmetad_temperature.sbatch	scripts/fit/fit_wtmetad_temperature.sbatch
+scripts/flooding_nsim_sweep.sbatch	scripts/fit/flooding_nsim_sweep.sbatch
+scripts/flooding_subsets.py	scripts/fit/flooding_subsets.py
+scripts/flooding_subsets.sbatch	scripts/fit/flooding_subsets.sbatch
+scripts/intermediate_subset_conditions.py	scripts/fit/intermediate_subset_conditions.py
+scripts/opes_highbarrier_eatrf.sbatch	scripts/fit/opes_highbarrier_eatrf.sbatch
+scripts/pack_results.py	scripts/fit/pack_results.py
+scripts/prospective_fit.sbatch	scripts/fit/prospective_fit.sbatch
+scripts/refit_flooding_full_data.py	scripts/fit/refit_flooding_full_data.py
+scripts/refit_flooding_full_data.sbatch	scripts/fit/refit_flooding_full_data.sbatch
+scripts/trajectory_summary.py	scripts/fit/trajectory_summary.py
+scripts/trajectory_summary.sbatch	scripts/fit/trajectory_summary.sbatch
+scripts/untempered_growth_law.sbatch	scripts/fit/untempered_growth_law.sbatch
+scripts/verify_flooding_bootstrap_fix.py	scripts/fit/verify_flooding_bootstrap_fix.py
+scripts/verify_flooding_bootstrap_fix.sbatch	scripts/fit/verify_flooding_bootstrap_fix.sbatch
+scripts/eatr_grid_fixedgamma.sbatch	-	fitting-variant exploration, not in the paper
+scripts/fit_opes_explore.sbatch	-	OPES-explore campaign, archived and not in the paper
+scripts/fit_ves_growing.sbatch	-	growing-VES campaign, not in the paper
+#
+# ---- running trajectories --------------------------------------------------------------
+scripts/run_seed_array.sbatch	scripts/run/run_seed_array.sbatch
+scripts/run_setup_on_node.sbatch	scripts/run/run_setup_on_node.sbatch
+scripts/tar_condition.sbatch	scripts/run/tar_condition.sbatch
+#
+# ---- designing and generating campaigns ------------------------------------------------
+scripts/bias_design_recipe.py	scripts/setup/bias_design_recipe.py
+scripts/design_wtmetad_temperature.py	scripts/setup/design_wtmetad_temperature.py
+scripts/design_wtmetad_temperature_ree.py	scripts/setup/design_wtmetad_temperature_ree.py
+scripts/prospective_predictions.py	scripts/setup/prospective_predictions.py
+scripts/setup_fametad.sh	scripts/setup/setup_fametad.sh
+scripts/setup_opes_highbarrier.sh	scripts/setup/setup_opes_highbarrier.sh
+scripts/setup_opes_temperature_ladder.sh	scripts/setup/setup_opes_temperature_ladder.sh
+scripts/setup_pmf_temperature_scan.sh	scripts/setup/setup_pmf_temperature_scan.sh
+scripts/setup_prospective_wtmetad.sh	scripts/setup/setup_prospective_wtmetad.sh
+scripts/setup_untempered_metad.sh	scripts/setup/setup_untempered_metad.sh
+scripts/setup_wtmetad_temperature.sh	scripts/setup/setup_wtmetad_temperature.sh
+scripts/setup_opes_explore.sh	-	OPES-explore campaign, archived and not in the paper
+scripts/setup_ves_growing.sh	-	growing-VES campaign, not in the paper
+#
+# ---- tests -----------------------------------------------------------------------------
+tests/conftest.py	tests/conftest.py
+tests/test_aggregate_subsampling.py	tests/test_aggregate_subsampling.py
+tests/test_audit_group_a.py	tests/test_audit_group_a.py
+tests/test_design_rule.py	tests/test_design_rule.py
+tests/test_flooding_io.py	tests/test_flooding_io.py
+tests/test_pareto_front.py	tests/test_pareto_front.py
+tests/test_paths_layout.py	tests/test_paths_layout.py
+tests/test_prospective_registration.py	tests/test_prospective_registration.py
+tests/test_prospective_table_caption.py	tests/test_prospective_table_caption.py
+tests/test_compare_release_tables.py	-	tests a script that is not released
+tests/test_raw_manifest_keeps_stashed_campaigns.py	-	builds mock source trees; a check of the cluster-side build, not of the analysis
+tests/test_release_manifest.py	-	checks this file against the working repository
+#
+# ---- figures: the notebook, its plot-ready data, and the figures of the paper ----------
+paper_figures/make_paper_figures.ipynb	figures/make_paper_figures.ipynb
+paper_figures/data/	figures/data/
+paper_figures/pdf/	figures/pdf/
+paper_figures/png/	figures/png/
+paper_figures/snapshots/	figures/snapshots/
+figures/	figures/	working figures the table scripts write alongside their tables
+#
+# ---- data held only in this repository -------------------------------------------------
+data/unbiased_runs_q_ladder/	runs/unbiased/q_ladder_snapshots/	frames rendered in Fig. 1(a)
+data/unbiased_runs_dumped_frame_q.tsv	runs/unbiased/q_ladder_snapshots/unbiased_runs_dumped_frame_q.tsv
+#
+# ---- analysis tables -------------------------------------------------------------------
+analysis/si_tables_full/	analysis/si_tables_full/
+analysis/apriori_choice.csv	analysis/apriori_choice.csv
+analysis/bias_design_table.csv	analysis/bias_design_table.csv
+analysis/bias_design_validation.csv	analysis/bias_design_validation.csv
+analysis/censoring_robustness.csv	analysis/censoring_robustness.csv
+analysis/cv_autocorrelation.csv	analysis/cv_autocorrelation.csv
+analysis/cv_autocorrelation_unbiased.csv	analysis/cv_autocorrelation_unbiased.csv
+analysis/eatr_worse_cases.csv	analysis/eatr_worse_cases.csv
+analysis/fametad_vs_pace.csv	analysis/fametad_vs_pace.csv
+analysis/fametad_vs_pace.pdf	analysis/fametad_vs_pace.pdf
+analysis/fes_convergence.pdf	analysis/fes_convergence.pdf
+analysis/fes_temperature_scan.csv	analysis/fes_temperature_scan.csv
+analysis/fes_temperature_scan_basin_gap.csv	analysis/fes_temperature_scan_basin_gap.csv
+analysis/fes_temperature_scan_profiles.csv	analysis/fes_temperature_scan_profiles.csv
+analysis/fes_temperature_scan_ree.csv	analysis/fes_temperature_scan_ree.csv
+analysis/fes_temperature_scan_ree_profiles.csv	analysis/fes_temperature_scan_ree_profiles.csv
+analysis/flooding_set_selection.csv	analysis/flooding_set_selection.csv
+analysis/flooding_sets_scan.csv	analysis/flooding_sets_scan.csv
+analysis/growth_law_conditions.csv	analysis/growth_law_conditions.csv
+analysis/ks_detectability.csv	analysis/ks_detectability.csv
+analysis/ks_detectability_by_pace.csv	analysis/ks_detectability_by_pace.csv
+analysis/master_sets.csv	analysis/master_sets.csv
+analysis/master_table.csv	analysis/master_table.csv
+analysis/minimum_data_summary.csv	analysis/minimum_data_summary.csv
+analysis/pareto_front.csv	analysis/pareto_front.csv
+analysis/pareto_strategies.csv	analysis/pareto_strategies.csv
+analysis/pilot_draws.csv	analysis/pilot_draws.csv
+analysis/pilot_recommended.csv	analysis/pilot_recommended.csv
+analysis/pilot_summary.csv	analysis/pilot_summary.csv
+analysis/pmf_temperature.pdf	analysis/pmf_temperature.pdf
+analysis/prospective_outcome.csv	analysis/prospective_outcome.csv
+analysis/prospective_predictions.csv	analysis/prospective_predictions.csv
+analysis/prospective_predictions_registered.csv	analysis/prospective_predictions_registered.csv
+analysis/subsampling_fametad.csv	analysis/subsampling_fametad.csv
+analysis/subsampling_flooding.csv	analysis/subsampling_flooding.csv
+analysis/subsampling_imetad.csv	analysis/subsampling_imetad.csv
+analysis/subsampling_untempered.csv	analysis/subsampling_untempered.csv
+analysis/temperature_convergence.csv	analysis/temperature_convergence.csv
+analysis/temperature_rates.csv	analysis/temperature_rates.csv
+analysis/temperature_rates.pdf	analysis/temperature_rates.pdf
+analysis/temperature_rates_per_rung.csv	analysis/temperature_rates_per_rung.csv
+analysis/unbiased_pmf_convergence.csv	analysis/unbiased_pmf_convergence.csv
+analysis/untempered_growth_law.csv	analysis/untempered_growth_law.csv
+analysis/untempered_growth_law_runs.csv	analysis/untempered_growth_law_runs.csv
+analysis/wtmetad_temperature_design.csv	analysis/wtmetad_temperature_design.csv
+analysis/wtmetad_temperature_design_ree.csv	analysis/wtmetad_temperature_design_ree.csv
+analysis/acceleration_distributions.pdf	-	exploratory analysis, not in the paper
+analysis/acceleration_distributions.png	-	exploratory analysis, not in the paper
+analysis/acceleration_per_run.csv	-	exploratory analysis, not in the paper
+analysis/neff_estimator_choice.csv	-	exploratory analysis, not in the paper
+analysis/neff_estimator_choice.pdf	-	exploratory analysis, not in the paper
+analysis/neff_estimator_choice.png	-	exploratory analysis, not in the paper
+analysis/robust_fit_rules.csv	-	exploratory analysis, not in the paper
+analysis/robust_fit_rules_fixes.csv	-	exploratory analysis, not in the paper

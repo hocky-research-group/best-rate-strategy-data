@@ -1,0 +1,19 @@
+[project]
+name = "best-rate-strategy-paper"
+version = "0.1.0"
+description = "Analysis for: minimum biased-MD data needed to recover a kinetic rate (EATR, EATR-flooding, iMetaD, OPES-flooding, VES-flooding)"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "scipy>=1.13",
+    "matplotlib>=3.9",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+figures = [
+    "ipykernel>=7.3.0",
+    "nbconvert>=7.17.1",
+    "nbformat>=5.11.1",
+]

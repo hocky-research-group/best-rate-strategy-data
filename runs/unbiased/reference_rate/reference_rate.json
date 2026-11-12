@@ -1,0 +1,25 @@
+{
+  "n_runs": 400,
+  "mean_fpt_us": 0.6500959424999999,
+  "k_mle_per_us": 1.5382344891346558,
+  "ln_k_mle_per_us": 0.43063532313867636,
+  "ln_k_mle_boot_std": 0.05031582199964415,
+  "ln_k_mle_boot_ci95": [
+    0.33311092259925407,
+    0.5278342676844147
+  ],
+  "k_cdf_per_us": 1.5631461110983746,
+  "ln_k_cdf_per_us": 0.4467005282592248,
+  "ln_k_cdf_boot_std": 0.05820383739277524,
+  "ln_k_cdf_boot_ci95": [
+    0.3335740447377968,
+    0.5587476765855058
+  ],
+  "ln_k_mle_per_s": 14.24614588110295,
+  "ks_stat_vs_exponential": 0.0287647001160517,
+  "ks_p_vs_exponential": 0.8855244774506468,
+  "cv_of_times": 1.0082237317687963,
+  "seed": 20260909,
+  "nboot": 2000,
+  "source": "runs/unbiased/reference_rate/unbiased_first_passage_times_ps.dat"
+}

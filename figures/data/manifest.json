@@ -1,0 +1,535 @@
+{
+ "commit": "35d453c",
+ "analysis_or_data_modified": true,
+ "script": "scripts/export_paper_figure_data.py",
+ "files": {
+  "reference.csv": {
+   "rows": 1,
+   "columns": [
+    "ln_k",
+    "sd",
+    "cost_us",
+    "n_runs"
+   ],
+   "sources": [
+    "data/reference_rate/reference_rate.json"
+   ]
+  },
+  "pmf.csv": {
+   "rows": 400,
+   "columns": [
+    "cv",
+    "x",
+    "F_kT",
+    "p_unfolded"
+   ],
+   "sources": [
+    "data/heuristics/pmf_unbiased/pmf_q.dat",
+    "data/heuristics/pmf_unbiased/pmf_rmsd.dat",
+    "data/heuristics/pmf_unbiased/pmf_rg.dat",
+    "data/heuristics/pmf_unbiased/pmf_ree.dat"
+   ]
+  },
+  "cv_summary.csv": {
+   "rows": 4,
+   "columns": [
+    "cv",
+    "sigma_A",
+    "barrier_kT",
+    "barrier_pos",
+    "folded_min",
+    "p_unfolded_at_barrier",
+    "gamma_grid_slow",
+    "gamma_opes_ladder"
+   ],
+   "sources": [
+    "data/heuristics/pmf_unbiased/pmf_summary.json",
+    "analysis/subsampling_imetad.csv",
+    "analysis/master_table.csv"
+   ]
+  },
+  "overlays.csv": {
+   "rows": 4500,
+   "columns": [
+    "family",
+    "cv",
+    "set_value",
+    "x",
+    "F_kT",
+    "V_kT",
+    "F_plus_V_kT"
+   ],
+   "sources": [
+    "data/results/bias_profiles/profile_*.dat",
+    "data/heuristics/pmf_unbiased/"
+   ]
+  },
+  "overlay_errors.csv": {
+   "rows": 40,
+   "columns": [
+    "family",
+    "cv",
+    "key",
+    "estimator",
+    "err_ln",
+    "gamma"
+   ],
+   "sources": [
+    "analysis/subsampling_imetad.csv",
+    "analysis/master_table.csv"
+   ]
+  },
+  "accuracy_cost.csv": {
+   "rows": 1486,
+   "columns": [
+    "family",
+    "cv",
+    "estimator",
+    "bf",
+    "height",
+    "pace",
+    "err_ln",
+    "cost_us",
+    "gamma",
+    "n_label",
+    "theta"
+   ],
+   "sources": [
+    "analysis/subsampling_imetad.csv",
+    "analysis/master_table.csv"
+   ]
+  },
+  "mindata_curves.csv": {
+   "rows": 240,
+   "columns": [
+    "protocol",
+    "cv",
+    "estimator",
+    "n",
+    "cost_us",
+    "p1",
+    "sd",
+    "n_conditions"
+   ],
+   "sources": [
+    "analysis/subsampling_imetad.csv",
+    "analysis/subsampling_flooding.csv"
+   ]
+  },
+  "mindata_points.csv": {
+   "rows": 48,
+   "columns": [
+    "protocol",
+    "family",
+    "pace",
+    "cv",
+    "estimator",
+    "min_cost_us",
+    "n_at_min",
+    "lo95",
+    "hi95",
+    "never"
+   ],
+   "sources": [
+    "analysis/minimum_data_summary.csv"
+   ]
+  },
+  "pareto_strategies.csv": {
+   "rows": 184,
+   "columns": [
+    "cv",
+    "protocol",
+    "estimator",
+    "n",
+    "cost_us",
+    "rmse",
+    "p1",
+    "label"
+   ],
+   "sources": [
+    "analysis/pareto_strategies.csv"
+   ]
+  },
+  "pareto_front.csv": {
+   "rows": 45,
+   "columns": [
+    "cv",
+    "protocol",
+    "estimator",
+    "n",
+    "cost_us",
+    "rmse",
+    "p1",
+    "label"
+   ],
+   "sources": [
+    "analysis/pareto_front.csv"
+   ]
+  },
+  "pareto_background.csv": {
+   "rows": 9216,
+   "columns": [
+    "cv",
+    "estimator",
+    "bf",
+    "height",
+    "pace",
+    "n",
+    "cost_us",
+    "rmse"
+   ],
+   "sources": [
+    "analysis/subsampling_imetad.csv"
+   ]
+  },
+  "design_conditions.csv": {
+   "rows": 640,
+   "columns": [
+    "cv",
+    "bf",
+    "height",
+    "pace",
+    "gamma",
+    "V_obs_kJmol",
+    "V_pred_unbroadened_kJmol",
+    "V_pred_kJmol",
+    "t_star_unbroadened_ps",
+    "t_obs_mean_ps",
+    "boost",
+    "cv_times",
+    "eatr_err",
+    "gamma_pilot",
+    "pred_boost",
+    "pred_t_ns",
+    "recommended",
+    "barrier_kT",
+    "residual_kT",
+    "residual_pred_kT",
+    "tau_ps",
+    "tau_rel_ps",
+    "tau_over_relax"
+   ],
+   "sources": [
+    "analysis/growth_law_conditions.csv",
+    "analysis/bias_design_validation.csv",
+    "analysis/cv_autocorrelation_unbiased.csv",
+    "analysis/cv_autocorrelation.csv"
+   ]
+  },
+  "cv_autocorrelation.csv": {
+   "rows": 4,
+   "columns": [
+    "cv",
+    "tau_exp_ps",
+    "tau_int_ps",
+    "tau_int_sd_ps",
+    "tau_int_sem_ps",
+    "tau_exp_sd_ps",
+    "n_segments",
+    "stride_ps",
+    "rows_per_segment",
+    "segment_ns",
+    "source"
+   ],
+   "sources": [
+    "analysis/cv_autocorrelation_unbiased.csv",
+    "analysis/cv_autocorrelation.csv"
+   ]
+  },
+  "prospective.csv": {
+   "rows": 2,
+   "columns": [
+    "cv",
+    "bf",
+    "height",
+    "pace",
+    "runs",
+    "committed",
+    "pred_boost",
+    "obs_boost",
+    "obs_boost_ge_min",
+    "pred_t_star_ns",
+    "expected_mean_escape_ns",
+    "obs_mean_escape_ns",
+    "obs_over_t_star",
+    "obs_over_expected",
+    "escape_within_factor_2_of_t_star",
+    "eatr_err",
+    "eatr_lo",
+    "eatr_hi",
+    "eatr_within_1",
+    "eatr_expectation_held",
+    "gamma",
+    "gamma_lo",
+    "gamma_hi",
+    "gamma_pilot",
+    "imetad_err",
+    "imetad_lo",
+    "imetad_hi",
+    "imetad_within_1",
+    "imetad_expectation_held",
+    "eatr_ks_p",
+    "imetad_ks_p"
+   ],
+   "sources": [
+    "analysis/prospective_outcome.csv"
+   ]
+  },
+  "temperature_rates.csv": {
+   "rows": 26,
+   "columns": [
+    "temperature_K",
+    "family",
+    "estimator",
+    "ln_k",
+    "ln_k_sd",
+    "gamma",
+    "d_barrier_kT",
+    "offset",
+    "runs",
+    "cost_us",
+    "mfpt_us",
+    "cost_over_mfpt",
+    "boost_obs",
+    "residual_kT"
+   ],
+   "sources": [
+    "analysis/temperature_rates.csv"
+   ]
+  },
+  "temperature_convergence.csv": {
+   "rows": 12,
+   "columns": [
+    "temperature_K",
+    "n_sets",
+    "gamma",
+    "ln_k",
+    "ln_k_all_sets"
+   ],
+   "sources": [
+    "analysis/temperature_convergence.csv"
+   ]
+  },
+  "temperature_pmf.csv": {
+   "rows": 1608,
+   "columns": [
+    "temperature_K",
+    "seed",
+    "q",
+    "F_kT"
+   ],
+   "sources": [
+    "analysis/fes_temperature_scan_profiles.csv"
+   ]
+  },
+  "highbarrier_sets.csv": {
+   "rows": 32,
+   "columns": [
+    "cv",
+    "barrier",
+    "ln_exp_beta_v",
+    "lnk_obs_us",
+    "err_gamma1",
+    "gamma_all"
+   ],
+   "sources": [
+    "data/results/opes_highbarrier/",
+    "data/refits_full_data/"
+   ]
+  },
+  "highbarrier_conv.csv": {
+   "rows": 10,
+   "columns": [
+    "cv",
+    "n_sets",
+    "max_barrier",
+    "err_eatrf"
+   ],
+   "sources": [
+    "data/results/opes_highbarrier/",
+    "data/refits_full_data/"
+   ]
+  },
+  "eatr_vs_imetad.csv": {
+   "rows": 639,
+   "columns": [
+    "cv",
+    "bf",
+    "height",
+    "pace",
+    "err_eatr",
+    "err_imetad"
+   ],
+   "sources": [
+    "data/subsampling/imetad_grid/"
+   ]
+  },
+  "eatr_worse_cases.csv": {
+   "rows": 90,
+   "columns": [
+    "cv",
+    "bf",
+    "height",
+    "pace",
+    "err_eatr",
+    "err_imetad",
+    "gamma",
+    "class"
+   ],
+   "sources": [
+    "analysis/eatr_worse_cases.csv"
+   ]
+  },
+  "ks_grid.csv": {
+   "rows": 1278,
+   "columns": [
+    "cv",
+    "bf",
+    "height",
+    "pace",
+    "estimator",
+    "ks_p",
+    "err_ln"
+   ],
+   "sources": [
+    "data/subsampling/imetad_grid/"
+   ]
+  },
+  "cdf_fits.csv": {
+   "rows": 6400,
+   "columns": [
+    "cv",
+    "pace",
+    "estimator",
+    "time_ns",
+    "k_teff",
+    "ecdf",
+    "fit"
+   ],
+   "sources": [
+    "data/subsampling/imetad_grid/"
+   ]
+  },
+  "cdf_fits_meta.csv": {
+   "rows": 32,
+   "columns": [
+    "cv",
+    "pace",
+    "estimator",
+    "ks_p",
+    "ks_stat",
+    "err_ln",
+    "gamma",
+    "n"
+   ],
+   "sources": [
+    "data/subsampling/imetad_grid/"
+   ]
+  },
+  "sets_scan.csv": {
+   "rows": 112,
+   "columns": [
+    "family",
+    "cv",
+    "pace",
+    "n",
+    "err_eatrf",
+    "gamma",
+    "err_g1"
+   ],
+   "sources": [
+    "analysis/flooding_sets_scan.csv"
+   ]
+  },
+  "ves_stage1.csv": {
+   "rows": 2207,
+   "columns": [
+    "cv",
+    "fc",
+    "time_ns",
+    "bias_kJmol"
+   ],
+   "sources": [
+    "data/results/bias_profiles/ves_stage1_Q_fc*.dat"
+   ]
+  },
+  "ves_static_max.csv": {
+   "rows": 24,
+   "columns": [
+    "cv",
+    "fc",
+    "max_bias_kJmol"
+   ],
+   "sources": [
+    "data/results/bias_profiles/vesbias_*.dat"
+   ]
+  },
+  "ves_sets.csv": {
+   "rows": 24,
+   "columns": [
+    "cv",
+    "fc",
+    "ln_exp_beta_v",
+    "lnk_obs_us",
+    "tau_obs_us",
+    "ks_p"
+   ],
+   "sources": [
+    "analysis/master_sets.csv"
+   ]
+  },
+  "opes_sets.csv": {
+   "rows": 160,
+   "columns": [
+    "cv",
+    "pace",
+    "barrier",
+    "ln_exp_beta_v",
+    "lnk_obs_us",
+    "tau_obs_us",
+    "ks_p"
+   ],
+   "sources": [
+    "analysis/master_sets.csv"
+   ]
+  },
+  "censoring.csv": {
+   "rows": 8,
+   "columns": [
+    "cv",
+    "f_slowest",
+    "T_ns",
+    "censored_all",
+    "events",
+    "runs",
+    "censored_per_set",
+    "eatrf_err",
+    "eatrf_lo",
+    "eatrf_hi",
+    "gamma",
+    "gamma_lo",
+    "gamma_hi",
+    "opesf_err",
+    "opesf_lo",
+    "opesf_hi"
+   ],
+   "sources": [
+    "data/verification/flooding_bootstrap_fix/"
+   ]
+  },
+  "q_ladder_frames.csv": {
+   "rows": 8,
+   "columns": [
+    "target",
+    "run",
+    "frame",
+    "time_ps",
+    "q"
+   ],
+   "sources": [
+    "data/unbiased_runs_q_ladder/selected_frames.csv",
+    "data/unbiased_runs_dumped_frame_q.tsv"
+   ]
+  }
+ }
+}

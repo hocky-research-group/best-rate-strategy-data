@@ -1,0 +1,12 @@
+# uv environment (rebuilt from pyproject.toml and uv.lock)
+.venv/
+# Python bytecode and notebook checkpoints
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# log directory of a verification run in progress
+.verify.*/
+# macOS
+.DS_Store
+# files held in the data deposit (scripts/fetch_large_files.sh)
+/runs/unbiased/first_passage/first_pass_runs.tar.gz

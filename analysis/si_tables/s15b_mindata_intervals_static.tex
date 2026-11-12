@@ -1,0 +1,22 @@
+\begin{table}[H]\centering
+\caption{The same for the static bias levels: cost ($\mu$s) and runs at the smallest size where 90\% of random subsets land within one ln unit and stay there, how many subsets were drawn at that size, and the uncertainty on the fraction of them within one ln unit (a 95\% range).}\label{tab:s15b}
+\begin{tabular}{lllcccc}\toprule
+protocol & estimator & CV & cost ($\mu$s) & runs & draws & 95\% interval\\ \midrule
+OPES, 5 barriers & EATR-flooding & $Q$ & 2.2 & 10 & 200 & 0.91--0.97 \\
+ &  & RMSD & 2.3 & 10 & 200 & 0.90--0.97 \\
+ &  & $R_g$ & 2.7 & 10 & 200 & 0.92--0.98 \\
+ &  & $R_{ee}$ & 13.7 & 15 & 200 & 0.91--0.97 \\
+ & $\gamma = 1$ & $Q$ & 1.1 & 5 & 200 & 0.98--1.00 \\
+ &  & RMSD & 1.2 & 5 & 200 & 0.96--0.99 \\
+ &  & $R_g$ & never & -- & -- & -- \\
+ &  & $R_{ee}$ & never & -- & -- & -- \\
+VES, 6 cutoffs & EATR-flooding & $Q$ & 4.2 & 5 & 50 & 0.90--1.00 \\
+ &  & RMSD & 5.9 & 5 & 50 & 0.87--0.99 \\
+ &  & $R_g$ & 3.9 & 10 & 50 & 0.79--0.96 \\
+ &  & $R_{ee}$ & 12.8 & 10 & 50 & 0.79--0.96 \\
+ & $\gamma = 1$ & $Q$ & 4.2 & 5 & 50 & 0.93--1.00 \\
+ &  & RMSD & 5.9 & 5 & 50 & 0.93--1.00 \\
+ &  & $R_g$ & 2.0 & 5 & 50 & 0.81--0.97 \\
+ &  & $R_{ee}$ & never & -- & -- & --\\ \bottomrule
+\end{tabular}
+\end{table}
