@@ -51,8 +51,14 @@ put() {   # put <source> <destination>
     [ -e "$1" ] || return 0
     rm -rf "$2"
     mkdir -p "$(dirname $2)"
-    cp -r "$1" "$2"
+    cp -r "$1" "$2" || fail "copy of $1"
 }
+
+# A step that could not copy, unpack or derive something is named and counted, and the build
+# then exits non-zero: the steps after it still run, so one report lists every failure, but a
+# partial archive is never reported as built.
+FAILED=0
+fail() { echo "  FAILED: $*"; FAILED=1; }
 
 build_public() {
     mkdir -p $PUB/runs $PUB/analysis $PUB/figures
@@ -102,7 +108,7 @@ build_public() {
     # the next pack sealed, and the analysis then runs without error on part of the fits.
     for t in $(find $PUB/runs -name '*.tar'); do
         [ -e "$t" ] || continue
-        tar -xf "$t" -C "$(dirname $t)" && rm -f "$t"
+        if tar -xf "$t" -C "$(dirname $t)"; then rm -f "$t"; else fail "unpacking of $t"; fi
     done
     say "opes_flooding" "$(find $PUB/runs/opes_flooding -type f | wc -l) files"
 
@@ -112,9 +118,9 @@ build_public() {
     # run tree rather than with the other fits. They are 57 small JSON files; copied with
     # their directory structure, since the analysis matches on the path, not the name alone.
     rsync -am --exclude='.ipynb_checkpoints/' --include='*/' --include='pace*_flooding.json' --exclude='*' \
-        $TRIASHA/prod_opes/ $PUB/runs/opes_flooding/prod_opes/ 2>/dev/null
+        $TRIASHA/prod_opes/ $PUB/runs/opes_flooding/prod_opes/ 2>/dev/null || fail "copy of the per-set OPES fits"
     rsync -am --exclude='.ipynb_checkpoints/' --include='*/' --include='combined_N*.json' --exclude='*' \
-        $TRIASHA/prod_ves_cutoff/ $PUB/runs/ves_flooding/prod_ves_cutoff/ 2>/dev/null
+        $TRIASHA/prod_ves_cutoff/ $PUB/runs/ves_flooding/prod_ves_cutoff/ 2>/dev/null || fail "copy of the per-set VES fits"
     say "source per-set fits" "$(find $PUB/runs/opes_flooding/prod_opes $PUB/runs/ves_flooding/prod_ves_cutoff -name '*.json' 2>/dev/null | wc -l) files"
     say "ves_flooding" "$(find $PUB/runs/ves_flooding -type f | wc -l) files"
 
@@ -132,7 +138,7 @@ build_public() {
     # built from the CVs and nothing here reads coordinates
     if [ -f $U/colvar_from_unbiased_traj/cvs.colvar ]; then
         gzip -c $U/colvar_from_unbiased_traj/cvs.colvar \
-            > $PUB/runs/unbiased/long_trajectory/cvs.colvar.gz
+            > $PUB/runs/unbiased/long_trajectory/cvs.colvar.gz || fail "compression of the long trajectory's CV file"
     fi
     # first_pass is a symlink into the directory the runs were produced in, so the real path
     # is resolved before tarring; tarring the link archives one line of text
@@ -145,6 +151,8 @@ build_public() {
         tar -czf $PUB/runs/unbiased/first_passage/first_pass_runs.tar.gz \
             -C "$(dirname $FP)" --exclude='slurm*' --exclude='*.ipynb' --exclude='*.dcd' \
             --warning=no-file-changed "$(basename $FP)"
+        # tar exits 1 when a file changed while it was read, which that filesystem also causes
+        [ $? -le 1 ] || fail "archive of the first-passage runs"
         # the rate analysis that sits beside the runs, kept loose so it can be read directly
         for f in comm.dat avg_comm.dat distr.dat getRate.py contact_plumed.dat; do
             [ -f "$FP/$f" ] && cp "$FP/$f" $PUB/runs/unbiased/first_passage/
@@ -173,11 +181,13 @@ build_public() {
         say "reference rate" "derived from the first-passage times"
     else
         say "reference rate" "NOT DERIVED - run scripts/analysis/reference_rate.py"
+        fail "derivation of the reference rate"
     fi
     # bytecode caches and notebook checkpoints are by-products of running things in the tree,
     # not part of what it ships
     find $PUB \( -name __pycache__ -o -name .ipynb_checkpoints \) -type d -prune -exec rm -rf {} +
     echo "public archive: $(find $PUB -type f | wc -l) files, $(du -sh $PUB | cut -f1)"
+    return $FAILED
 }
 
 build_raw() {

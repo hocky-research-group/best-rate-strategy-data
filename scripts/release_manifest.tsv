@@ -31,13 +31,15 @@ scripts/build_release.sh	scripts/build_release.sh
 scripts/verify_release.sh	scripts/verify_release.sh
 scripts/rebuild_release.sbatch	scripts/rebuild_release.sbatch
 scripts/study_run_summary.py	scripts/study_run_summary.py
-scripts/fetch_large_files.sh	scripts/fetch_large_files.sh
+scripts/check_large_files.sh	scripts/check_large_files.sh
 scripts/assemble_public_repository.sh	-	builds the public repository from the release; meaningless inside it
 scripts/compare_release_tables.py	-	compares a release with this repository; meaningless inside it
 scripts/sync_release_code.sh	-	pushes this repository's files to the release; meaningless inside it
 scripts/stash_loose_run_trees.sbatch	-	moves run trees off the cluster's project filesystem; not part of the analysis
 scripts/restore_stashed_run_trees.sbatch	-	brings stashed run trees back to the cluster's project filesystem; not part of the analysis
 scripts/stash_stray_run_data.sbatch	-	moves run data of campaigns outside the paper off the cluster's project filesystem; not part of the analysis
+scripts/squashfs_trial.sbatch	-	measures an archive format on the cluster; not part of the analysis
+scripts/squashfs_overlay_fit_trial.sbatch	-	checks that an archived run tree can be fitted in place on the cluster; not part of the analysis
 scripts/make_manuscript_diff.sh	-	manuscript tooling
 #
 # ---- analysis: fits and summaries -> tables -> figure data -> figures ------------------
@@ -138,7 +140,11 @@ tests/test_pareto_front.py	tests/test_pareto_front.py
 tests/test_paths_layout.py	tests/test_paths_layout.py
 tests/test_prospective_registration.py	tests/test_prospective_registration.py
 tests/test_prospective_table_caption.py	tests/test_prospective_table_caption.py
+tests/test_check_large_files.py	tests/test_check_large_files.py
 tests/test_compare_release_tables.py	-	tests a script that is not released
+tests/test_release_sync_stale_files.py	-	tests a script that is not released
+tests/test_stash_stray_data_verifies_content.py	-	tests a script that is not released
+tests/test_release_build_reports_failures.py	-	builds mock source trees; a check of the cluster-side build, not of the analysis
 tests/test_raw_manifest_keeps_stashed_campaigns.py	-	builds mock source trees; a check of the cluster-side build, not of the analysis
 tests/test_release_manifest.py	-	checks this file against the working repository
 #

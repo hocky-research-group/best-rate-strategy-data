@@ -20,6 +20,9 @@
 #   4. the archive's own verification, logged to release/verify_<date>.log
 #   5. the contents table and checksums
 # A finished run leaves release/rebuild_<jobid>.done holding the exit status of each step.
+# The job exits non-zero when any step did. Verification runs only on a tree every earlier
+# step built, and the checksums are written only after it passes: a checksum list over a
+# partial or unverified tree would certify it.
 #
 # The number of conditions without a tarball is checked against MAX_NEW before any is
 # tarred: a manifest that suddenly lists hundreds of untarred conditions is a wrong pattern
@@ -29,7 +32,7 @@
 #        SUMMARISE="<campaign> ..." MAX_NEW=10 sbatch --export=ALL rebuild_release.sbatch
 # ---------------------------------------------------------------------------
 set -u
-P=/projects/rps/gmh4/hockygroup/gmh4/projects/rates/best-rate-strategy-study
+P=${STUDY:-/projects/rps/gmh4/hockygroup/gmh4/projects/rates/best-rate-strategy-study}
 PUB=$P/release/best-rate-strategy-data
 RAW=$P/release/raw-runs
 B=$PUB/scripts/build_release.sh
@@ -39,7 +42,9 @@ STATUS=$P/release/rebuild_${SLURM_JOB_ID:-manual}.done
 module load anaconda3/2025.06
 cd $P || exit 1
 : > $STATUS.partial
-note() { echo "$1 rc=$2" >> $STATUS.partial; echo "== $1 rc=$2 $(date -Iseconds)"; }
+FAILED=0
+note() { echo "$1 rc=$2" >> $STATUS.partial; echo "== $1 rc=$2 $(date -Iseconds)"; [ "$2" -eq 0 ] || FAILED=1; }
+skip() { echo "$1 not run: an earlier step failed" | tee -a $STATUS.partial; }
 
 echo "== start $(date -Iseconds) on $(hostname), code $(cat $PUB/SOURCE_COMMIT 2>/dev/null)"
 if [ -n "$SUMMARISE" ]; then
@@ -71,10 +76,15 @@ else
 fi
 note tar_new_conditions $rc
 
-(cd $PUB && PY=python bash scripts/verify_release.sh) > $P/release/verify_$(date +%F).log 2>&1
-note verify $?
-tail -4 $P/release/verify_$(date +%F).log
+if [ $FAILED -eq 0 ]; then
+    (cd $PUB && PY=python bash scripts/verify_release.sh) > $P/release/verify_$(date +%F).log 2>&1
+    note verify $?
+    tail -4 $P/release/verify_$(date +%F).log
+else
+    skip verify
+fi
 
-bash $B contents; note contents $?
+if [ $FAILED -eq 0 ]; then bash $B contents; note contents $?; else skip contents; fi
 mv $STATUS.partial $STATUS
 echo "== end $(date -Iseconds)"
+exit $FAILED

@@ -85,18 +85,30 @@ made before a campaign ran: `bias_design_table.csv` and `wtmetad_temperature_des
 predictions as committed before the prospective runs; `prospective_outcome.py` refuses to
 run if the two differ, so the first is never regenerated.
 
+## Full simulation output
+
+What is too large for this repository is in a shared folder:
+
+<https://nyu.box.com/s/z1skc8raekdjmmho2eugp5thn7qfskf3>
+
+| in the folder | holds |
+|---|---|
+| `raw-runs/` | the output of every biased run, one archive per condition in a directory per campaign; its `README.md` describes the layout, `CONTENTS.tsv` gives the sizes and `SHA256SUMS` a checksum for every file |
+| `raw-runs/environment/` | the LAMMPS and PLUMED build and the container images |
+| `first_pass_runs.tar.gz` | the 400 unbiased first-passage runs |
+
 ## What is not here
 
 **The first-passage trajectories.** `runs/unbiased/first_passage/first_pass_runs.tar.gz`,
 the 400 unbiased runs the reference rate rests on, is too large for a git host. It is listed
-with its size and checksum in `LARGE_FILES.tsv` and held in the data deposit named in the
-paper's data availability statement; `scripts/fetch_large_files.sh` downloads and checks it.
+with its size and checksum in `LARGE_FILES.tsv` and is in the folder above; downloaded to
+that path, it is checked against the list by `scripts/check_large_files.sh`.
 No figure or table needs it: the first-passage times extracted from it are in
 `runs/unbiased/reference_rate/`.
 
 **Raw trajectories of the biased runs.** Each run's COLVAR, HILLS or KERNELS and PLUMED log,
-tarred one archive per condition, come to 294 GB in 919 archives and are held
-separately; see the data availability statement. This archive holds what the analysis reads
+tarred one archive per condition, come to 294 GB in 919 archives and are in `raw-runs/` of
+the folder above. This archive holds what the analysis reads
 instead: one escape time, acceleration, maximum bias and hill count per run, in
 `runs/_per_run_summaries` and `runs/wtmetad_grid/trajectory_summary`, and the fit of every
 condition.
@@ -108,7 +120,7 @@ their fits are here. The `withwork` and uncut VES variants of the source tree ar
 absent, as no analysis in this paper reads them.
 
 **The software environment.** The LAMMPS build, the PLUMED build and the container images
-are archived with the raw trajectories rather than here. Versions are recorded in the paper;
+are in `raw-runs/environment/` of the folder above rather than here. Versions are recorded in the paper;
 every fit records the git hash of the analysis code that produced it, in the `.cmd` file
 beside it.
 
